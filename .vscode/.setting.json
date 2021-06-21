@@ -1,0 +1,5 @@
+{
+    "code-runner.executorMap": {
+        "cpp": "g++ -std=c++11 $fullFileName && ./a.out"
+    }
+}
