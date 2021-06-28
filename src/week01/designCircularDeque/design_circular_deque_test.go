@@ -19,7 +19,6 @@ type MyCircularDeque struct {
 /** Initialize your data structure here. Set the size of the deque to be k. */
 func Constructor(k int) MyCircularDeque {
 	return MyCircularDeque{nil, nil, k, 0}
-
 }
 
 
