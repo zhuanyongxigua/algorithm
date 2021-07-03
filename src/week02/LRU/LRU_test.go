@@ -1,65 +1,86 @@
 package LRU_test
 
+import (
+	"testing"
+)
+
 type Node struct {
-	key   int
-	value int
-	pre   *Node
-	next  *Node
+	Key int
+	Val int
+	Pre *Node
+	Next *Node
 }
 
 type LRUCache struct {
-	capacity int
-	HashMap  map[int]*Node
-	head     *Node
-	tail     *Node
+	Cap int
+	Head *Node
+	Tail *Node
+	ValMap map[int]*Node
 }
 
 func Constructor(capacity int) LRUCache {
-	var LRUCache LRUCache
-	LRUCache.capacity = capacity
-	LRUCache.HashMap = make(map[int]*Node)
-	LRUCache.head = new(Node)
-	LRUCache.tail = new(Node)
-	LRUCache.head.next = LRUCache.tail
-	LRUCache.tail.pre = LRUCache.head
-	return LRUCache
+	head := &Node{-1, -1, nil, nil}
+	tail := &Node{-1, -1, head, nil}
+	head.Next = tail
+	l := LRUCache{
+		Cap: capacity,
+		Head: head,
+		Tail: tail,
+		ValMap: make(map[int]*Node),
+	}
+	return l
 }
 
 func (this *LRUCache) Get(key int) int {
-	if node, ok := this.HashMap[key]; ok {
-		this.removeFromList(node)
-		this.insertToListHead(node.key, node.value)
-		return node.value
+	if _, ok := this.ValMap[key]; !ok {
+		return -1
 	}
-	return -1
+	cur := this.ValMap[key]
+	this.removeFromList(cur)
+	this.insertToListHead(key, cur.Val)
+	return cur.Val
 }
 
 func (this *LRUCache) Put(key int, value int) {
-	if node, ok := this.HashMap[key]; ok {
-		this.removeFromList(node)
-		this.insertToListHead(key, value)
-	} else {
-		this.insertToListHead(key, value)
+	if _, ok := this.ValMap[key]; ok {
+		cur := this.ValMap[key]
+		this.removeFromList(cur)
 	}
-	if len(this.HashMap) > this.capacity {
-		this.removeFromList(this.tail.pre)
-	}
+	this.insertToListHead(key, value)
 }
 
 func (this *LRUCache) insertToListHead(key, value int) {
-	node := new(Node)
-	node.key = key
-	node.value = value
-	node.next = this.head.next
-	this.head.next.pre = node
-	node.pre = this.head
-	this.head.next = node
-	this.HashMap[key] = node
-
+	if len(this.ValMap) == this.Cap {
+		this.removeFromList(this.Tail.Pre)
+	}
+	node := &Node{
+		Key: key,
+		Val: value,
+		Pre: this.Head,
+		Next: this.Head.Next,
+	}
+	node.Next.Pre = node
+	this.Head.Next = node
+	this.ValMap[key] = node
 }
 
 func (this *LRUCache) removeFromList(node *Node) {
-	node.pre.next = node.next
-	node.next.pre = node.pre
-	delete(this.HashMap, node.key)
+	node.Next.Pre = node.Pre
+	node.Pre.Next = node.Next
+	delete(this.ValMap, node.Key)
+}
+
+func TestLRUCache(t *testing.T) {
+	lruCache := Constructor(2)
+	lruCache.Put(1, 1)
+	lruCache.Put(2, 2)
+	t.Log(lruCache.Get(1))
+	lruCache.Put(3, 3)
+	t.Log(lruCache.Get(2))
+	lruCache.Put(4, 4)
+	t.Log(lruCache.Get(1))
+	t.Log(lruCache.Get(3))
+	t.Log(lruCache.Get(4))
+	// result2B, _ := json.Marshal(lruCache.ValMap)
+	// t.Log("testing hahaha", string(result2B))
 }
