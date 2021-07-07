@@ -1,12 +1,14 @@
 package course_schedule_II_test
 
-import "testing"
+import (
+	"testing"
+)
 
 type Graph struct {
-	Edges [][]int
+	Edges   [][]int
 	Visited []int
-	Result []int
-	Valid bool
+	Result  []int
+	Valid   bool
 }
 
 func (g *Graph) dfs(u int) {
@@ -43,8 +45,8 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 	}
 	if g.Valid {
 		l := len(g.Result)
-		for i := 0; i < l / 2; i++ {
-			g.Result[i], g.Result[l - i - 1] = g.Result[l - i - 1], g.Result[i]
+		for i := 0; i < l/2; i++ {
+			g.Result[i], g.Result[l-i-1] = g.Result[l-i-1], g.Result[i]
 		}
 		return g.Result
 	} else {
@@ -53,5 +55,6 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 }
 
 func TestFindOrder(t *testing.T) {
+	t.Log("fuck")
 	t.Log(findOrder(2, [][]int{[]int{1, 0}}))
 }
