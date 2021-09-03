@@ -81,6 +81,4 @@ func TestLRUCache(t *testing.T) {
 	t.Log(lruCache.Get(1))
 	t.Log(lruCache.Get(3))
 	t.Log(lruCache.Get(4))
-	// result2B, _ := json.Marshal(lruCache.ValMap)
-	// t.Log("testing hahaha", string(result2B))
 }
