@@ -4,26 +4,29 @@ import (
 	"testing"
 )
 
-func subarraySum(nums []int, k int) int {
-	ans := 0
-	prefix := make([]int, len(nums) + 1)
-	for i := range nums {
-		prefix[i + 1] = prefix[i] + nums[i]
-		if prefix[i + 1] == k {
-			ans++
-		}
-	}
-	for i := 1; i < len(prefix); i++ {
-		for j := 1; j < i; j++ {
-			if prefix[i] == (prefix[j] + k) {
-				ans++
+func combine(n int, k int) [][]int {
+	ans := [][]int{}
+	cur := []int{}
+	var r func(index int)
+	r = func(index int) {
+		if len(cur) == k || len(cur) + n - index + 1 < k {
+			if len(cur) == k {
+				tmp := make([]int, k)
+				copy(tmp, cur)
+				ans = append(ans, tmp)
 			}
+			return
 		}
+		r(index + 1)
+		cur = append(cur, index)
+		r(index + 1)
+		cur = cur[:len(cur) - 1]
 	}
+	r(1)
 	return ans
 }
 
 func TestTmp(t *testing.T) {
-	result := subarraySum([]int{1}, 0)
+	result := combine(4, 2)
 	t.Log(result)
 }
