@@ -27,6 +27,27 @@ func maxDepth(root *TreeNode) int {
 	return ans
 }
 
+// second way
+func max(x, y float64) float64 {
+	if math.IsNaN(x) {
+		return y
+	}
+	if math.IsNaN(y) {
+		return x
+	}
+	if x > y {
+		return x
+	}
+	return y
+}
+
+func maxDepth2(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	return max(maxDepth2(root.Left), maxDepth2(root.Right)) + 1
+}
+
 func TestMaximumDepthOfBinaryTreeTest(t *testing.T) {
 	// tree := &TreeNode{
 	// 	120, 
