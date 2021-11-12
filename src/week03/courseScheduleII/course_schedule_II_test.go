@@ -1,8 +1,87 @@
 package course_schedule_II_test
 
 import (
+	"fmt"
 	"testing"
 )
+
+type OutLineItem struct {
+	Lines []int
+	Marked bool
+	InDegree int
+}
+
+// bfs
+func findOrder3(numCourses int, prerequisites [][]int) []int {
+	queue := []int{}
+	outLineList := make([]OutLineItem, numCourses)
+	curQueueIndex := -1
+	for _, edge := range prerequisites {
+		outLineList[edge[1]].Lines = append(outLineList[edge[1]].Lines, edge[0])
+		outLineList[edge[0]].InDegree++
+	}
+	for index, outLineItem := range outLineList {
+		if outLineItem.InDegree == 0 && outLineItem.Marked != true {
+			queue = append(queue, index)
+		}
+	}
+	for curQueueIndex + 1 < len(queue) {
+		curQueueIndex++
+		index := queue[curQueueIndex]
+		outLineList[index].Marked = true
+		for _, line := range outLineList[index].Lines {
+			outLineList[line].InDegree--
+			if outLineList[line].InDegree == 0 && outLineList[line].Marked != true {
+				queue = append(queue, line)
+			}
+		}
+	}
+	if len(queue) < len(outLineList) {
+		return []int{}
+	}
+	return queue
+}
+
+// bfs
+func findOrder2(numCourses int, prerequisites [][]int) []int {
+	queue := []int{}
+	outLineList := make([]OutLineItem, numCourses)
+	curQueueIndex := -1
+	for _, edge := range prerequisites {
+		outLineList[edge[1]].Lines = append(outLineList[edge[1]].Lines, edge[0])
+		outLineList[edge[0]].InDegree++
+	}
+	var bfs func()
+	bfs = func() {
+		if len(queue) == 0 {
+			return
+		}
+		// 神奇的是我发现以前居然是用 dfs 写的，这题 dfs 居然能写，写完 bfs 再试下 dfs
+		// 下面的 dfs 的解法还是很精彩的，精髓就在回溯那个地方，如果是在回来的时候才向数组里面塞东西，那顺序就是完美的，只不过就是反过来的
+		index := queue[curQueueIndex]
+		for _, line := range outLineList[index].Lines {
+			outLineList[line].InDegree--
+			if outLineList[line].InDegree == 0 && outLineList[line].Marked != true {
+				queue = append(queue, line)
+				outLineList[line].Marked = true
+				curQueueIndex++
+				bfs()
+			}
+		}
+	}
+	for index, outLineItem := range outLineList {
+		if outLineItem.InDegree == 0 && outLineItem.Marked != true {
+			queue = append(queue, index)
+			outLineList[index].Marked = true
+			curQueueIndex++
+			bfs()
+		}
+	}
+	if len(queue) != len(outLineList) {
+		return []int{}
+	}
+	return queue
+}
 
 type Graph struct {
 	Edges   [][]int
@@ -43,6 +122,7 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 			g.dfs(i)
 		}
 	}
+	fmt.Printf("Result after dfs: %v\n", g.Result)
 	if g.Valid {
 		l := len(g.Result)
 		for i := 0; i < l/2; i++ {
@@ -55,6 +135,9 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 }
 
 func TestFindOrder(t *testing.T) {
-	t.Log("fuck")
+	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{2, 0},[]int{3, 1},[]int{3, 2}}))
+	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1},[]int{3, 2}}))
+	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1}}))
 	t.Log(findOrder(2, [][]int{[]int{1, 0}}))
+	t.Log(findOrder(2, [][]int{[]int{0, 1}}))
 }

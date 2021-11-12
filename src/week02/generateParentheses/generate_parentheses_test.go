@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func generateParenthesis(n int) []string {
+func generateParenthesis2(n int) []string {
 	if n == 0 {
 		return []string{}
 	}
@@ -31,6 +31,36 @@ func generateParenthesis(n int) []string {
 	}
 	r(n - 1, "(")
 	return ans
+}
+
+func generateParenthesis(n int) []string {
+	if n == 0 {
+		return []string{}
+	}
+	dedupMap := make(map[int][]string)
+	var r func(m int) []string
+	r = func(m int) []string {
+		if m == 0 {
+			return []string{""}
+		}
+		if _, ok := dedupMap[m]; ok {
+			return dedupMap[m]
+		}
+		ans := []string{}
+		for k := 1; k <= m; k++ {
+			result_a := r(k - 1)
+			result_b := r(m - k)
+			for _, item_a := range result_a {
+				for _, item_b := range result_b {
+					ans = append(ans, "(" + item_a + ")" + item_b)
+				}
+			}
+		}
+		dedupMap[m] = ans
+		return ans
+	}
+	result := r(n)
+	return result
 }
 
 func TestGenerateParentheses(t *testing.T) {
