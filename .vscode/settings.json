@@ -1,3 +1,9 @@
 {
-	"go.inferGopath": false
+	"go.inferGopath": false,
+	"github.copilot.enable": {
+		"*": false,
+		"yaml": false,
+		"plaintext": false,
+		"markdown": false
+	}
 }
