@@ -2,7 +2,7 @@ package climbing_stairs_test
 
 import "testing"
 
-func climbingStairs(n int) int {
+func climbStairs(n int) int {
 	if n < 3 {
 		return n
 	}

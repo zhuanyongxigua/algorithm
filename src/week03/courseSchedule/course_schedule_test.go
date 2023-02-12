@@ -4,10 +4,10 @@ import "testing"
 
 func canFinish(numCourses int, prerequisites [][]int) bool {
 	var (
-		edges = make([][]int, numCourses)
+		edges   = make([][]int, numCourses)
 		visited = make([]int, numCourses)
-		valid = true
-		dfs func(u int)
+		valid   = true
+		dfs     func(u int)
 	)
 
 	dfs = func(u int) {
