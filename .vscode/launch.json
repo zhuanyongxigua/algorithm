@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"name": "Launch Program",
-			"program": "${workspaceFolder}/src/week06/coinChange/coinChangeTest/coin_change.js",
+			"program": "${workspaceFolder}/src/week06/uniquePathsIi/unique_paths_ii.js",
 			"request": "launch",
 			"skipFiles": [
 				"<node_internals>/**"
