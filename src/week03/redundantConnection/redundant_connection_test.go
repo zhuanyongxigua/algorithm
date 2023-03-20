@@ -41,10 +41,44 @@ func findRedundantConnection(edges [][]int) []int {
 	return []int{0, 0}
 }
 
+func findRedundantConnection2(input [][]int) []int {
+	var (
+		edges   = make([][]int, len(input) + 1)
+		visited = make([]int, len(input) + 1)
+		dfs     func(u int, fa int) bool
+	)
+	dfs = func(u int, fa int) bool {
+		visited[u] = 1
+		for _, edge := range edges[u] {
+			if edge == fa {
+				continue
+			}
+			if visited[edge] == 0 {
+				dfs(edge, u)
+			} else if visited[edge] == 1 {
+				return false
+			}
+		}
+		visited[u] = 0
+		return true
+	}
+	for _, edge := range input {
+		edges[edge[0]] = append(edges[edge[0]], edge[1])
+		edges[edge[1]] = append(edges[edge[1]], edge[0])
+		for i := range edges {
+			valid := dfs(i, i)
+			if valid == false {
+				return edge
+			}
+		}
+	}
+	return []int{0, 0}
+}
+
 func TestRedundantConnection(t *testing.T) {
-	t.Log(findRedundantConnection([][]int{[]int{1, 2}, []int{1, 3}, []int{2, 3}}))
-	t.Log(findRedundantConnection([][]int{[]int{1, 2}, []int{2, 3}, []int{3, 4}, []int{1, 4}, []int{1, 5}}))
+	t.Log(findRedundantConnection2([][]int{[]int{1, 2}, []int{1, 3}, []int{2, 3}}))
+	t.Log(findRedundantConnection2([][]int{[]int{1, 2}, []int{2, 3}, []int{3, 4}, []int{1, 4}, []int{1, 5}}))
 	// 5 [[1,4],[2,4],[3,1],[3,2]]
 	// t.Log(findRedundantConnection([][]int{[]int{1, 4}, []int{2, 4}, []int{3, 1}, []int{3, 2}}))
-	t.Log(findRedundantConnection([][]int{[]int{1, 5}, []int{3, 4}, []int{3, 5}, []int{4, 5}, []int{2, 4}}))
+	t.Log(findRedundantConnection2([][]int{[]int{1, 5}, []int{3, 4}, []int{3, 5}, []int{4, 5}, []int{2, 4}}))
 }

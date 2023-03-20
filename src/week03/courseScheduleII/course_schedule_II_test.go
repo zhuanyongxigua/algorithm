@@ -134,10 +134,59 @@ func findOrder(numCourses int, prerequisites [][]int) []int {
 	}
 }
 
+// bfs
+func findOrder4(numCourses int, prerequisites [][]int) []int {
+	ans := []int{}
+	queue := []int{}
+	edges := make([]OutLineItem, numCourses)
+	for _, v := range prerequisites {
+		edges[v[1]].Lines = append(edges[v[1]].Lines, v[0])
+		edges[v[0]].InDegree++
+	}
+	start := OutLineItem{[]int{}, false, -1}
+	for i, v := range edges {
+		if v.InDegree == 0 {
+			queue = append(queue, i)
+		}
+	}
+	if len(queue) != 0 {
+		start = edges[queue[0]]
+		ans = append(ans, queue[0])
+		queue = queue[1:]
+	}
+	for start.InDegree == 0 {
+		for _, v := range start.Lines {
+			edges[v].InDegree--
+			if edges[v].InDegree == 0 {
+				queue = append(queue, v)
+			}
+		}
+		if len(queue) != 0 {
+			start = edges[queue[0]]
+			ans = append(ans, queue[0])
+			queue = queue[1:]
+		} else {
+			break
+		}
+	}
+	if len(queue) != 0 {
+		return []int{}
+	}
+	for _, v := range edges {
+		if v.InDegree != 0 {
+			return []int{}
+		}
+	}
+	return ans
+}
+
 func TestFindOrder(t *testing.T) {
-	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{2, 0},[]int{3, 1},[]int{3, 2}}))
-	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1},[]int{3, 2}}))
-	t.Log(findOrder(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1}}))
-	t.Log(findOrder(2, [][]int{[]int{1, 0}}))
-	t.Log(findOrder(2, [][]int{[]int{0, 1}}))
+	// t.Log(findOrder4(4, [][]int{[]int{1, 0},[]int{2, 0},[]int{3, 1},[]int{3, 2}}))
+	// t.Log(findOrder4(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1},[]int{3, 2}}))
+	// t.Log(findOrder4(4, [][]int{[]int{1, 0},[]int{3, 0},[]int{2, 1}}))
+	t.Log(findOrder4(2, [][]int{[]int{1, 0}}))
+	// t.Log(findOrder4(2, [][]int{[]int{0, 1}}))
+	// t.Log(findOrder4(2, [][]int{}))
+	// t.Log(findOrder4(2, [][]int{[]int{0, 1}, []int{1, 0}}))
+	// t.Log(findOrder4(3, [][]int{[]int{1, 0}, []int{1, 2}, []int{0, 1}}))
 }
