@@ -10,6 +10,7 @@ class Solution:
             mid = (left + right) >> 1
             validCount = self.isValid(bloomDay, k, mid)
             minCount = min(minCount, validCount if validCount >= m else minCount)
+		
             if validCount >= m:
                 right = mid
             else:
