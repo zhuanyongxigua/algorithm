@@ -13,7 +13,6 @@ func maxSlidingWindow(nums []int, k int) []int {
 		}
 		// maintain queue monotonic, insert new index
 		for len(q) > 0 && nums[q[len(q)-1]] <= nums[i] {
-			length := q[len(q)-1]
 			q = q[:len(q)-1]
 		}
 		q = append(q, i)

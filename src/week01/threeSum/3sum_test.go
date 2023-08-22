@@ -9,13 +9,10 @@ import (
 func twoSum(nums []int, start int, target int) [][]int {
 	fmt.Printf("nums: %v; start: %v; target: %v\n", nums, start, target)
 	ans := [][]int{}
-	j := len(nums) - 1
 	for i := start; i < len(nums); i++ {
 		if i > start && nums[i] == nums[i - 1] {
 			continue
 		}
-		for i < j && num
-
 	}
 	return ans
 }

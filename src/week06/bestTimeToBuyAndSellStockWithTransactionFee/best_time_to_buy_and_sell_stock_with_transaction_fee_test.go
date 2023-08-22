@@ -38,7 +38,7 @@ func maxProfit(prices []int, fee int) int {
 }
 
 func TestMaxProfit(t *testing.T) {
-	result := maxProfit([]int{7, 1, 5, 3, 6, 4})
+	result := maxProfit([]int{7, 1, 5, 3, 6, 4}, 0)
 	t.Log(result)
 }
 

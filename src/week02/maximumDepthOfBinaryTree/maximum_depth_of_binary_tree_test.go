@@ -1,6 +1,8 @@
 package maximum_depth_of_binary_tree_test
 
-import "testing"
+import (
+	"testing"
+)
 
 type TreeNode struct {
 	Val int
@@ -28,13 +30,7 @@ func maxDepth(root *TreeNode) int {
 }
 
 // second way
-func max(x, y float64) float64 {
-	if math.IsNaN(x) {
-		return y
-	}
-	if math.IsNaN(y) {
-		return x
-	}
+func max(x, y int) int {
 	if x > y {
 		return x
 	}
@@ -45,7 +41,8 @@ func maxDepth2(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	return max(maxDepth2(root.Left), maxDepth2(root.Right)) + 1
+	maxNum := max(maxDepth2(root.Left), maxDepth2(root.Right))
+	return maxNum + 1
 }
 
 func TestMaximumDepthOfBinaryTreeTest(t *testing.T) {
