@@ -1,13 +1,15 @@
 package lowest_common_ancestor_of_a_binary_tree_test
 
+// 236.二叉树的最近公共祖先
+
 import (
 	"testing"
 )
 
 // Definition for a binary tree node.
 type TreeNode struct {
-	Val int
-	Left *TreeNode
+	Val   int
+	Left  *TreeNode
 	Right *TreeNode
 }
 
@@ -56,10 +58,10 @@ func TestLowestFunc(t *testing.T) {
 		&TreeNode{2, &TreeNode{7, nil, nil}, &TreeNode{4, nil, nil}},
 	}
 	q := &TreeNode{
-			1,
-			&TreeNode{0, nil, nil},
-			&TreeNode{8, nil, nil},
-		}
+		1,
+		&TreeNode{0, nil, nil},
+		&TreeNode{8, nil, nil},
+	}
 	tree := &TreeNode{3, p, q}
 
 	// q := &TreeNode{4, nil, nil}
