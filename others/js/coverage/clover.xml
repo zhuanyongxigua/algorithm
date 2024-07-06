@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1719729410541" clover="3.2.0">
+  <project timestamp="1719729410541" name="All files">
+    <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1" elements="21" coveredelements="21" complexity="0" loc="12" ncloc="12" packages="1" files="1" classes="1"/>
+    <file name="index.js" path="/Users/yuxin/Insync/zhuanyongxigua@gmail.com/OneDrive/Codes/algorithm/others/js/week01/mergeSortedArray/index.js">
+      <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+      <line num="9" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="10" count="3" type="stmt"/>
+      <line num="11" count="3" type="stmt"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="13" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="14" count="15" type="cond" truecount="4" falsecount="0"/>
+      <line num="15" count="6" type="stmt"/>
+      <line num="16" count="6" type="stmt"/>
+      <line num="17" count="6" type="stmt"/>
+      <line num="19" count="9" type="stmt"/>
+      <line num="20" count="9" type="stmt"/>
+      <line num="21" count="9" type="stmt"/>
+    </file>
+  </project>
+</coverage>

@@ -22,44 +22,40 @@ func mergeStones(stones []int, k int) int {
 		temp[l] = make([][]int, n+1)
 		for r := range temp[l] {
 			temp[l][r] = make([]int, k+1)
-			// 堆数
-			for k1 := range temp[l][r] {
-				temp[l][r][k1] = c
+			for i := range temp[l][r] {
+				temp[l][r][i] = c
 			}
 		}
-		// 这里没懂
 		temp[l][l][1] = 0
 	}
-	sums := make([]int, n+1)
+	sum := make([]int, n+1)
 	for i := 1; i <= n; i++ {
-		sums[i] = sums[i-1] + stones[i-1]
+		sum[i] = sum[i-1] + stones[i-1]
 	}
-	// 为什么长度从 2 开始？length 从 1 开始也是可以的，从 0 开始，下面不好判断，会越界
-	// 所以原因就很明显了，从 1 开始没什么意义，算了也是白算
 	for length := 2; length <= n; length++ {
-		// 为什么 left 从 0 开始？
 		for l := 0; l < n-length+1; l++ {
 			r := l + length - 1
-			// 为什么堆数从 2 开始？k1 从 1 开始也是可以的，从 0 开始，下面不好判断，会越界
-			// 所以原因就很明显了，从 1 开始没什么意义，算了也是白算
-			// 而且题目也告诉你了，k >= 2
-			for k1 := 2; k1 <= k; k1++ {
+			for i := 2; i <= k; i++ {
 				for p := l; p < r; p++ {
-					fmt.Printf("temp[l][r][k1], temp[%d][%d][%d]: %d\n", l, r, k1, temp[l][r][k1])
-					fmt.Printf("temp[l][p][1], temp[%d][%d][1]: %d\n", l, r, temp[l][r][1])
-					fmt.Printf("temp[p+1][r][k1-1], temp[%d][%d][%d]: %d\n", p+1, r, k1-1, temp[p+1][r][k1-1])
+					fmt.Printf("temp[l][r][i], temp[%d][%d][%d]: %d\n", l, r, i, temp[l][r][i])
+					fmt.Printf("temp[l][p][1], temp[%d][%d][1]: %d\n", l, p, temp[l][p][1])
+					fmt.Printf("temp[p+1][r][i-1], temp[%d][%d][%d]: %d\n", p+1, r, i-1, temp[p+1][r][i-1])
+					temp[l][r][i] = min(temp[l][r][i], temp[l][p][1]+temp[p+1][r][i-1])
+					fmt.Printf("temp[l][r][i], temp[%d][%d][%d]: %d\n", l, r, i, temp[l][r][i])
 					fmt.Println()
-					temp[l][r][k1] = min(temp[l][r][k1], temp[l][p][1]+temp[p+1][r][k1-1])
 				}
 			}
-			temp[l][r][1] = min(temp[l][r][1], temp[l][r][k]+sums[r+1]-sums[l])
+			fmt.Printf("temp[l][r][1], temp[%d][%d][1]: %d\n", l, r, temp[l][r][1])
+			temp[l][r][1] = min(temp[l][r][1], temp[l][r][k]+sum[r+1]-sum[l])
+			fmt.Printf("temp[l][r][1], temp[%d][%d][1]: %d\n", l, r, temp[l][r][1])
+			fmt.Println()
+			fmt.Println()
 		}
 	}
 	if temp[0][n-1][1] == c {
 		return -1
-	} else {
-		return temp[0][n-1][1]
 	}
+	return temp[0][n-1][1]
 }
 
 func TestMaxCoins(t *testing.T) {
