@@ -23,6 +23,14 @@ function reverseGroup (head, tail) {
   return [tail, resultTail]
 }
 
+function getEnd (head, k) {
+  while (k > 1 && head !== null) {
+    head = head.next
+    k--
+  }
+  return head
+}
+
 /**
  * @param {ListNode} head
  * @param {number} k
@@ -33,34 +41,26 @@ var reverseKGroup = function(head, k) {
   if (
     head === null
     || head.next === null
-    || k === 0
-    || k === 1
+    || k <= 1
   ) return head
   const protectedHead = {
     value: -1,
     next: head
   }
 
-  let num = 0
-  let paramHead = head
-  let paramTail = protectedHead
-  let lastTail = paramTail
-  while (paramTail !== null) {
-    if (num < k) {
-      num++
-      paramTail = paramTail.next
-    } else {
-      const nextParamHead = paramTail.next
-      const [resultHead, resultTail] = reverseGroup(paramHead, paramTail)
-      paramHead = nextParamHead
-      paramTail = nextParamHead
-      lastTail.next = resultHead
-      lastTail = resultTail
-      num = 1
+  let lastTail = protectedHead
+  while (head !== null) {
+    let curTail = getEnd(head, k)
+    if (curTail === null) {
+      lastTail.next = head
+      break
     }
-  }
-  if (num <= k) {
-    lastTail.next = paramHead
+    const nextHead = curTail.next
+    const [resultHead, resultTail] = reverseGroup(head, curTail)
+    head = nextHead
+    curTail = nextHead
+    lastTail.next = resultHead
+    lastTail = resultTail
   }
   return protectedHead.next
 }
