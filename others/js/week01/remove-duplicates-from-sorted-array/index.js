@@ -4,14 +4,14 @@
  * @return {number}
  */
 export function removeDuplicates (nums) {
-  let k = 0
-  let curDuplicatedNum = -100000000
+  let k = 0;
+  let curDuplicatedNum = -100000000;
   for (let i = 0; i < nums.length; i++) {
     if (nums[i] !== curDuplicatedNum) {
-      nums[k] = nums[i]
-      curDuplicatedNum = nums[i]
-      k++
+      nums[k] = nums[i];
+      curDuplicatedNum = nums[i];
+      k++;
     }
   }
-  return k
+  return k;
 };

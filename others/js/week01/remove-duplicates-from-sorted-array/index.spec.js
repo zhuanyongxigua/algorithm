@@ -1,4 +1,4 @@
-import { removeDuplicates } from './index.js'
+import { removeDuplicates } from './index.js';
 
 
 describe('Test removeDuplicates', () => {

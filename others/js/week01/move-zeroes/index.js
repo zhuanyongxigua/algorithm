@@ -3,27 +3,27 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var moveZeroes = function(nums) {
-  if (nums.length <= 1) return nums
-  let k = 1
+const moveZeroes = function (nums) {
+  if (nums.length <= 1) return nums;
+  let k = 1;
   for (let i = 0; i < k; i++) {
     if (nums[i] === 0) {
       for (let j = k; j < nums.length; j++) {
         if (nums[j] !== 0) {
-          k = j
-          break
+          k = j;
+          break;
         }
       }
-      const temp = nums[k]
-      nums[k] = nums[i]
-      nums[i] = temp
+      const temp = nums[k];
+      nums[k] = nums[i];
+      nums[i] = temp;
     }
-    k++
+    k++;
     if (k >= nums.length) {
-      break
+      break;
     }
   }
-  return nums
+  return nums;
 };
 
-export { moveZeroes }
+export { moveZeroes };

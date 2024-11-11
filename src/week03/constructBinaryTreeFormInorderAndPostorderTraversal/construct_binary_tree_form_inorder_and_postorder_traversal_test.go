@@ -3,8 +3,8 @@ package construct_binary_tree_form_inorder_and_postorder_traversal_test
 import "testing"
 
 type TreeNode struct {
-	Val int
-	Left *TreeNode
+	Val   int
+	Left  *TreeNode
 	Right *TreeNode
 }
 
@@ -35,5 +35,7 @@ func buildTree(inorder []int, postorde []int) *TreeNode {
 }
 
 func TestBuildTree(t *testing.T) {
-	t.Log(buildTree([]int{9,3,15,20,7}, []int{9,15,7,20,3}))
+	// t.Log(buildTree([]int{9, 3, 15, 20, 7}, []int{9, 15, 7, 20, 3}))
+	result := buildTree([]int{1, 2, 3}, []int{2, 3, 1})
+	t.Log(result)
 }

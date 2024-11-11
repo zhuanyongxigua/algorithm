@@ -1,4 +1,4 @@
-import { moveZeroes } from './index.js'
+import { moveZeroes } from './index.js';
 
 
 describe('Test moveZeros', () => {
@@ -15,5 +15,5 @@ describe('Test moveZeros', () => {
   test('[1, 0, 1]', () => {
     const nums = [1, 0, 1];
     expect(moveZeroes(nums)).toEqual([1, 1, 0]);
-  })
+  });
 });

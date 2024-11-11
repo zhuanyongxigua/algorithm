@@ -1,5 +1,8 @@
 {
   "jestrunner.debugOptions": {
     "runtimeExecutable": "/Users/yuxin/.nvm/versions/node/v18.13.0/bin/node"
-  }
+  },
+  "cursor.cpp.disabledLanguages": [
+    "javascript"
+  ]
 }
