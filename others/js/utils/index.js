@@ -111,3 +111,48 @@ export class BinaryHeap {
     return this.nodes[1];
   }
 }
+
+// JavaScript
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+
+export var sortArray = function (nums) {
+  quickSort(nums, 0, nums.length - 1);
+  return nums;
+};
+
+var quickSort = function (arr, l, r) {
+  if (l >= r) return;
+  const pivot = partition(arr, l, r);
+  quickSort(arr, l, pivot);
+  quickSort(arr, pivot + 1, r);
+};
+
+var partition = function (a, l, r) {
+  const pivot = l + Math.floor(Math.random() * (r - l + 1));
+  const pivotVal = a[pivot];
+  // let pivotVal = 11;
+  console.log('pivot', pivot, ', pivotVal', pivotVal);
+  while (l <= r) {
+    while (a[l] < pivotVal) l++;
+    while (a[r] > pivotVal) r--;
+    // 这里是一个难点，与上面的 while (l <= r) 对应，不是矛盾的。
+    // 如果 pivotVal 是 10，现在的剩下的区间是 [11, 12, 8]
+    // left 在 11 上面，right 在 8 上面，这个时候就跳过了这个 break
+    // 进入到了最下面的 condition，处理之后的区间是 [8, 12, 11]
+    // 这是 left 和 right 都在 12 上面，如果这个 12 的 index 当作 right 返回了
+    // 就出问题了，所以 right 需要再减一次才行
+    // 最终的结果 left 和 right 一定是要错位的（暂时想到的 case 都是错位的）
+    // 错位的意思就是 right 在 left 左边一位
+    if (l == r) break;
+    if (l < r) {
+      const temp = a[l]; a[l] = a[r]; a[r] = temp;
+      l++;
+      r--;
+    }
+  }
+  console.log('a', a, ', r', r);
+  return r;
+};

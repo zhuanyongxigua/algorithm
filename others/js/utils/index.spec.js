@@ -1,4 +1,10 @@
-import { BinaryHeap, ListNode, arrayToLinkedList, linkedListToArray } from '.';
+import {
+  BinaryHeap,
+  ListNode,
+  arrayToLinkedList,
+  linkedListToArray,
+  sortArray
+} from '.';
 
 describe('BinaryHeap', () => {
   describe('MaxHeap', () => {
@@ -142,3 +148,15 @@ describe('Linked List Utilities', () => {
     });
   });
 });
+
+describe('Quick Sort', () => {
+  test('[3, 1, 5, 11, 20, 9, 10, 6, 15]', () => {
+    const data = [3, 1, 5, 11, 20, 9, 10, 6, 15];
+    console.log(sortArray(data));
+  })
+
+  test('[110, 100, 0]', () => {
+    const data = [110, 100, 0];
+    console.log(sortArray(data));
+  })
+})

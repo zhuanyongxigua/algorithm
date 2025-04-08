@@ -2,10 +2,6 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import stylisticTs from '@stylistic/eslint-plugin-ts';
 
-// eslint-plugin-import couldn't resolve these two libs, this may be caused by the absence of `main` field in their package.json
-import typescriptParser from '@typescript-eslint/parser';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-
 import jsdoc from 'eslint-plugin-jsdoc';
 import { includeIgnoreFile } from '@eslint/compat';
 
@@ -22,7 +18,6 @@ const configs = [
       globals: {
         browser: true
       },
-      parser: typescriptParser,
       parserOptions: {
         project: tsconfigPath,
         sourceType: 'module',
@@ -32,12 +27,9 @@ const configs = [
     },
     plugins: {
       jsdoc: jsdoc,
-      '@stylistic/ts': stylisticTs,
-      '@typescript-eslint': typescriptEslint
+      '@stylistic/ts': stylisticTs
     },
     rules: {
-      // Copy from @typescript-eslint/eslint-plugin/dist/configs/eslint-recommended,
-      // there is a overrides of this config that latest eslint couldn't support.
       'constructor-super': 'off', // ts(2335) & ts(2377)
       'getter-return': 'off', // ts(2378)
       'no-const-assign': 'off', // ts(2588)
@@ -60,38 +52,10 @@ const configs = [
       'prefer-const': 'error', // ts provides better types with const
       'prefer-rest-params': 'error', // ts provides better types with rest args over arguments
       'prefer-spread': 'error', // ts transpiles spread to apply, so no need for manual apply
-      // Copy from @typescript-eslint/eslint-plugin/dist/configs/recommended,
-      // there is a extends of this config that latest eslint couldn't support.
       'no-array-constructor': 'off',
-      '@typescript-eslint/no-duplicate-enum-values': 'error',
-      '@typescript-eslint/no-empty-object-type': 'error',
-      '@typescript-eslint/no-extra-non-null-assertion': 'error',
-      '@typescript-eslint/no-misused-new': 'error',
-      '@typescript-eslint/no-namespace': 'error',
-      '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
-      '@typescript-eslint/no-require-imports': 'error',
-      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
-      '@typescript-eslint/no-unsafe-declaration-merging': 'error',
-      '@typescript-eslint/no-unsafe-function-type': 'error',
       'no-unused-expressions': 'off',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-wrapper-object-types': 'error',
-      '@typescript-eslint/prefer-as-const': 'error',
-      '@typescript-eslint/prefer-namespace-keyword': 'error',
-      '@typescript-eslint/array-type': [
-        'error',
-        {
-          default: 'array'
-        }
-      ],
-      '@typescript-eslint/await-thenable': 'error',
-      '@typescript-eslint/ban-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-non-null-assertion': 'off',
-      '@typescript-eslint/no-this-alias': 'off',
-      '@typescript-eslint/naming-convention': 'off',
       '@stylistic/ts/no-namespace': 'off',
-      '@typescript-eslint/consistent-type-assertions': 'error',
       // ignore
       '@stylistic/ts/ban-ts-comment': 'off', // 合并fvm后打开
       '@stylistic/ts/no-non-null-asserted-optional-chain': 'off',
@@ -120,7 +84,6 @@ const configs = [
       '@stylistic/ts/member-ordering': 'off',
       '@stylistic/ts/no-empty-function': 'off',
       '@stylistic/ts/no-floating-promises': 'off',
-      '@typescript-eslint/no-for-in-array': 'error',
       '@stylistic/ts/no-unnecessary-qualifier': 'off',
       '@stylistic/ts/no-unnecessary-type-assertion': 'off',
       '@stylistic/ts/quotes': [
@@ -130,14 +93,6 @@ const configs = [
       '@stylistic/ts/semi': [
         'error',
         'always'
-      ],
-      '@typescript-eslint/triple-slash-reference': [
-        'error',
-        {
-          path: 'always',
-          types: 'prefer-import',
-          lib: 'always'
-        }
       ],
       '@stylistic/ts/type-annotation-spacing': 'error',
       '@stylistic/ts/unified-signatures': 'off',
@@ -185,15 +140,6 @@ const configs = [
       'no-caller': 'error',
       'no-case-declarations': 'off',
       'no-cond-assign': 'error',
-      'no-console': [
-        'error',
-        {
-          allow: [
-            'warn',
-            'error'
-          ]
-        }
-      ],
       'no-constant-condition': 'error',
       'no-control-regex': 'error',
       'no-duplicate-imports': 'off',
