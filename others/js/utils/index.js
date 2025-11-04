@@ -35,7 +35,6 @@ export class BinaryHeap {
   isMax;
   constructor (comparator) {
     this.comparator = comparator;
-    console.log('performance before comparator', performance.now());
     if (this.comparator(new ListNode(0), new ListNode(1))) {
       this.nodes = [new ListNode(Number.MIN_SAFE_INTEGER)];
       this.isMax = false;
@@ -156,3 +155,41 @@ var partition = function (a, l, r) {
   console.log('a', a, ', r', r);
   return r;
 };
+
+export const transpose = (arr) => {
+  if (!arr || arr.length === 0 || !arr[0] || arr[0].length === 0) {
+    return [];
+  }
+  const rows = arr.length;
+  const cols = arr[0].length;
+  const transposed = Array(cols).fill(0).map(() => Array(rows).fill(0));
+  for (let i = 0; i < rows; i++) {
+    for (let j = 0; j < cols; j++) {
+      transposed[j][i] = arr[i][j];
+    }
+  }
+  return transposed;
+};
+
+export function kmp (s, t) {
+  const n = s.length;
+  const m = t.length;
+  s = ' ' + s;
+  t = ' ' + t;
+  const next = [];
+  next[1] = 0;
+  for (let i = 2, j= 0; i <= m; i++) { // 模式串t自匹配
+    while (j > 0 && t[i] != t[j+1]) j = next[j];
+    if (t[i] == t[j+1]) j++;
+    next[i] = j;
+  }
+  const f = [];
+  for (let i = 1,j = 0; i <= n; i++) { // 与文本串s匹配，过程相似
+    while (j > 0 && (j == m || s[i] != t[j+1])) j = next[j];
+    if (s[i] == t[j+1]) j++;
+    f[i] = j;
+    if (f[i] == m) { // 此时就是t在s中的某一次出现
+      return true;
+    }
+  }
+}

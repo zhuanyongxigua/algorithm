@@ -2,8 +2,10 @@ import {
   BinaryHeap,
   ListNode,
   arrayToLinkedList,
+  kmp,
   linkedListToArray,
-  sortArray
+  sortArray,
+  transpose,
 } from '.';
 
 describe('BinaryHeap', () => {
@@ -153,10 +155,59 @@ describe('Quick Sort', () => {
   test('[3, 1, 5, 11, 20, 9, 10, 6, 15]', () => {
     const data = [3, 1, 5, 11, 20, 9, 10, 6, 15];
     console.log(sortArray(data));
-  })
+  });
 
   test('[110, 100, 0]', () => {
     const data = [110, 100, 0];
     console.log(sortArray(data));
+  });
+});
+
+describe('transpose', () => {
+  test('should transpose a 2x3 matrix', () => {
+    const matrix = [[1, 2, 3], [4, 5, 6]];
+    const expected = [[1, 4], [2, 5], [3, 6]];
+    expect(transpose(matrix)).toEqual(expected);
+  });
+
+  test('should transpose a 3x2 matrix', () => {
+    const matrix = [[1, 2], [3, 4], [5, 6]];
+    const expected = [[1, 3, 5], [2, 4, 6]];
+    expect(transpose(matrix)).toEqual(expected);
+  });
+
+  test('should transpose a square matrix', () => {
+    const matrix = [[1, 2], [3, 4]];
+    const expected = [[1, 3], [2, 4]];
+    expect(transpose(matrix)).toEqual(expected);
+  });
+
+  test('should handle a single row matrix', () => {
+    const matrix = [[1, 2, 3]];
+    const expected = [[1], [2], [3]];
+    expect(transpose(matrix)).toEqual(expected);
+  });
+
+  test('should handle a single column matrix', () => {
+    const matrix = [[1], [2], [3]];
+    const expected = [[1, 2, 3]];
+    expect(transpose(matrix)).toEqual(expected);
+  });
+
+  test('should handle an empty matrix', () => {
+    const matrix = [];
+    expect(transpose(matrix)).toEqual([]);
+  });
+
+  test('should handle a matrix with empty rows', () => {
+    const matrix = [[]];
+    expect(transpose(matrix)).toEqual([]);
+  });
+});
+
+describe('kmp', () => {
+  test('abccdf, ccd', () => {
+    const result = kmp('abccdf', 'ccd');
+    expect(result).toEqual(true);
   })
 })
